@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyFreedomTracker • Desktop Dividend Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .font-display {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.05;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .feature-card {
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), 
+                        box-shadow 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .nav-scrolled {
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200">
+    <!-- Navbar -->
+    <nav class="border-b border-slate-800 bg-slate-950 sticky top-0 z-50">
+        <div class="max-w-screen-xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <span class="font-display text-2xl font-semibold tracking-tight">MyFreedomTracker</span>
+                </div>
+
+                <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="#features" class="hover:text-emerald-400 transition-colors">Features</a>
+                    <a href="#playground" class="hover:text-emerald-400 transition-colors">Freedom Playground</a>
+                    <a href="#pricing" class="hover:text-emerald-400 transition-colors">Pricing</a>
+                </div>
+
+                <div class="flex items-center gap-x-3">
+                    <a href="#pricing" 
+                       class="hidden md:inline-flex items-center px-5 py-2 text-sm font-semibold rounded-2xl border border-slate-700 hover:bg-slate-900 transition-colors">
+                        See Pricing
+                    </a>
+                    <a href="https://myfreedomtracker.lemonsqueezy.com/checkout" 
+                       class="inline-flex items-center px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 transition-all text-white text-sm font-semibold rounded-2xl">
+                        Buy License — $99/yr
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="max-w-screen-xl mx-auto px-6 pt-16 pb-14">
+        <div class="grid md:grid-cols-12 gap-x-12 items-center">
+            <div class="md:col-span-7">
+                <div class="inline-flex items-center gap-x-2 bg-slate-900 border border-slate-800 rounded-full px-4 py-1.5 mb-6">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium text-emerald-400">Windows Desktop App • Local &amp; Private</span>
+                </div>
+                
+                <h1 class="text-6xl md:text-7xl font-display tracking-[-0.04em] leading-none mb-6">
+                    Track your real income.<br>
+                    <span class="text-emerald-400">Model your freedom.</span>
+                </h1>
+                
+                <p class="max-w-lg text-xl text-slate-400 mb-8">
+                    The offline desktop app built for income investors. See your current monthly income, 
+                    set goals, and instantly test hypothetical allocations with accurate projected returns.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://myfreedomtracker.lemonsqueezy.com/checkout" 
+                       class="inline-flex items-center justify-center px-8 py-4 bg-emerald-500 hover:bg-emerald-600 transition-all text-white text-lg font-semibold rounded-3xl shadow-lg shadow-emerald-500/25">
+                        Get 1-Year License — $99
+                    </a>
+                    <a href="#playground" 
+                       class="inline-flex items-center justify-center px-8 py-4 border border-slate-700 hover:bg-slate-900 transition-colors text-lg font-semibold rounded-3xl">
+                        See the Freedom Playground
+                    </a>
+                </div>
+                
+                <div class="mt-8 flex items-center gap-x-8 text-sm text-slate-400">
+                    <div class="flex items-center gap-x-2">
+                        <i class="fa-solid fa-check text-emerald-500"></i>
+                        <span>Offline-first</span>
+                    </div>
+                    <div class="flex items-center gap-x-2">
+                        <i class="fa-solid fa-check text-emerald-500"></i>
+                        <span>Your data stays local</span>
+                    </div>
+                    <div class="flex items-center gap-x-2">
+                        <i class="fa-solid fa-check text-emerald-500"></i>
+                        <span>No recurring billing</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="md:col-span-5 mt-10 md:mt-0">
+                <div class="relative">
+                    <img src="Screenshot 2026-06-20 002051.png" 
+                         alt="MyFreedomTracker showing Current Real Portfolio Snapshot with hypothetical allocation builder and projected income"
+                         class="rounded-3xl border border-slate-800 shadow-2xl w-full">
+                    <div class="absolute -bottom-3 -right-3 bg-slate-900 border border-slate-700 rounded-2xl px-4 py-2 text-sm shadow-xl">
+                        <div class="flex items-center gap-x-2">
+                            <span class="text-emerald-400 font-semibold">81.2% of $3,000 goal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Freedom Playground Highlight -->
+    <div id="playground" class="max-w-screen-xl mx-auto px-6 py-16">
+        <div class="text-center mb-10">
+            <div class="inline-block px-4 py-1.5 bg-emerald-500/10 text-emerald-400 text-sm font-semibold rounded-full mb-4">
+                CORE FEATURE
+            </div>
+            <h2 class="section-header tracking-tight">Freedom Playground</h2>
+            <p class="mt-3 text-xl text-slate-400 max-w-2xl mx-auto">
+                Build hypothetical allocations and instantly see your projected monthly, weekly, and yearly income.
+            </p>
+        </div>
+
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-3">
+                <img src="Screenshot 2026-06-20 002051.png" 
+                     alt="Freedom Playground interface with live hypothetical allocation table and projected income calculations"
+                     class="rounded-2xl w-full border border-slate-700">
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="flex gap-4">
+                    <div class="w-9 h-9 flex-shrink-0 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-percentage text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold">Live % Allocation</div>
+                        <div class="text-sm text-slate-400 mt-1">Easily adjust percentages and watch income projections update instantly.</div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-9 h-9 flex-shrink-0 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-dollar-sign text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold">Accurate Projections</div>
+                        <div class="text-sm text-slate-400 mt-1">See yearly, monthly, and weekly income based on current ETF distribution rates.</div>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-9 h-9 flex-shrink-0 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-bullseye text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold">Goal Progress</div>
+                        <div class="text-sm text-slate-400 mt-1">Clearly see what percentage of your target monthly income your allocation would deliver.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div id="features" class="bg-slate-900 border-y border-slate-800 py-16">
+        <div class="max-w-screen-xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="section-header tracking-tight">Built for serious income investors</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="feature-card bg-slate-950 border border-slate-800 rounded-3xl p-7">
+                    <i class="fa-solid fa-sync text-3xl text-emerald-500 mb-5"></i>
+                    <h3 class="font-semibold text-xl mb-2">Automated DRIP</h3>
+                    <p class="text-slate-400">Track dividend reinvestment across your entire portfolio with precision.</p>
+                </div>
+                
+                <div class="feature-card bg-slate-950 border border-slate-800 rounded-3xl p-7">
+                    <i class="fa-solid fa-tachometer-alt text-3xl text-emerald-500 mb-5"></i>
+                    <h3 class="font-semibold text-xl mb-2">Freedom Score</h3>
+                    <p class="text-slate-400">Instantly see how close you are to your monthly income goal.</p>
+                </div>
+                
+                <div class="feature-card bg-slate-950 border border-slate-800 rounded-3xl p-7">
+                    <i class="fa-solid fa-calculator text-3xl text-emerald-500 mb-5"></i>
+                    <h3 class="font-semibold text-xl mb-2">FIFO &amp; Realized Gains</h3>
+                    <p class="text-slate-400">Accurate cost basis and capital gains tracking using proper FIFO method.</p>
+                </div>
+                
+                <div class="feature-card bg-slate-950 border border-slate-800 rounded-3xl p-7">
+                    <i class="fa-solid fa-wallet text-3xl text-emerald-500 mb-5"></i>
+                    <h3 class="font-semibold text-xl mb-2">Monthly Budget Planner</h3>
+                    <p class="text-slate-400">Plan and forecast your dividend income month by month.</p>
+                </div>
+                
+                <div class="feature-card bg-slate-950 border border-slate-800 rounded-3xl p-7">
+                    <i class="fa-solid fa-lock text-3xl text-emerald-500 mb-5"></i>
+                    <h3 class="font-semibold text-xl mb-2">100% Local &amp; Private</h3>
+                    <p class="text-slate-400">All data stored locally on your computer. No cloud. No subscriptions. Full ownership.</p>
+                </div>
+                
+                <div class="feature-card bg-slate-950 border border-slate-800 rounded-3xl p-7">
+                    <i class="fa-solid fa-file-export text-3xl text-emerald-500 mb-5"></i>
+                    <h3 class="font-semibold text-xl mb-2">Beautiful Exports</h3>
+                    <p class="text-slate-400">Generate clean reports of your current snapshot and hypothetical scenarios.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing -->
+    <div id="pricing" class="max-w-screen-xl mx-auto px-6 py-20">
+        <div class="max-w-xl mx-auto text-center mb-10">
+            <h2 class="section-header tracking-tight">Simple annual licensing</h2>
+            <p class="mt-3 text-xl text-slate-400">One payment. Full access for 12 months. Renew only when you choose.</p>
+        </div>
+
+        <div class="max-w-md mx-auto">
+            <div class="bg-slate-900 border border-emerald-500/30 rounded-3xl p-8">
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <div class="text-emerald-400 font-semibold tracking-[1px] text-sm">1-YEAR LICENSE</div>
+                        <div class="text-6xl font-display font-bold tracking-[-2px] mt-1">$99</div>
+                        <div class="text-slate-400">billed annually</div>
+                    </div>
+                </div>
+
+                <ul class="space-y-3.5 mb-8 text-[15px]">
+                    <li class="flex items-start gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <span>Full access to Freedom Playground &amp; all features</span></li>
+                    <li class="flex items-start gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <span>Accurate hypothetical income projections</span></li>
+                    <li class="flex items-start gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <span>Automated DRIP, Freedom Score &amp; reporting</span></li>
+                    <li class="flex items-start gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <span>Priority updates during your license period</span></li>
+                    <li class="flex items-start gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <span>100% local data storage (your data stays on your PC)</span></li>
+                </ul>
+
+                <a href="https://myfreedomtracker.lemonsqueezy.com/checkout" 
+                   class="block text-center bg-emerald-500 hover:bg-emerald-600 transition-all text-white font-semibold py-4 rounded-2xl text-lg">
+                    Buy 1-Year License — $99
+                </a>
+                <p class="text-center text-xs text-slate-500 mt-4">Secure checkout • License delivered instantly via email</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="max-w-screen-xl mx-auto px-6 pb-20">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-center section-header tracking-tight mb-10">Frequently Asked Questions</h2>
+            
+            <div class="space-y-3">
+                <div class="border border-slate-800 rounded-3xl px-7 py-6">
+                    <div class="font-semibold mb-1">How long does the license last?</div>
+                    <div class="text-slate-400 text-sm">Your license is valid for 12 months from the purchase date. You can renew at any time.</div>
+                </div>
+                <div class="border border-slate-800 rounded-3xl px-7 py-6">
+                    <div class="font-semibold mb-1">Is my data stored in the cloud?</div>
+                    <div class="text-slate-400 text-sm">No. Everything is stored locally on your computer in a simple JSON file. You have full ownership and privacy.</div>
+                </div>
+                <div class="border border-slate-800 rounded-3xl px-7 py-6">
+                    <div class="font-semibold mb-1">What happens when the license expires?</div>
+                    <div class="text-slate-400 text-sm">The app continues to run in read-only mode. You can renew whenever you're ready.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="bg-emerald-500 py-16">
+        <div class="max-w-screen-xl mx-auto px-6 text-center">
+            <h2 class="text-white text-4xl font-display tracking-tight mb-3">Start modeling your financial freedom today.</h2>
+            <p class="text-emerald-100 text-lg mb-8">One-time $99 license. No recurring charges.</p>
+            
+            <a href="https://myfreedomtracker.lemonsqueezy.com/checkout" 
+               class="inline-flex items-center justify-center bg-white hover:bg-emerald-50 transition-colors text-emerald-600 font-semibold text-lg px-10 py-4 rounded-3xl">
+                Get Your License Now — $99
+            </a>
+        </div>
+    </div>
+
+    <footer class="border-t border-slate-800 py-8 text-sm text-slate-500">
+        <div class="max-w-screen-xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-y-3">
+            <div>© 2026 MyFreedomTracker. All rights reserved.</div>
+            <div class="flex gap-x-6">
+                <a href="#" class="hover:text-slate-300 transition-colors">Privacy</a>
+                <a href="#" class="hover:text-slate-300 transition-colors">Terms</a>
+                <a href="mailto:support@myfreedomtracker.com" class="hover:text-slate-300 transition-colors">Support</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
