@@ -301,6 +301,7 @@
     <a href="/#features">Features</a>
     <a href="/#playground">Freedom Playground</a>
     <a href="/#pricing">Pricing</a>
+    <a href="/manual">Manual</a>
     <a href="/support" class="active">Support</a>
   </div>
   <div class="nav-ctas">
@@ -317,7 +318,9 @@
 
 <!-- QUICK LINKS -->
 <div class="quick-links">
+  <a class="quick-link" href="/manual"><span class="icon">📖</span> Quick Start Manual</a>
   <a class="quick-link" href="#faq"><span class="icon">❓</span> FAQs</a>
+  <a class="quick-link" href="#community"><span class="icon">💬</span> Community Q&amp;A</a>
   <a class="quick-link" href="#bug"><span class="icon">🐛</span> Report a Bug</a>
   <a class="quick-link" href="#suggest"><span class="icon">💡</span> Suggest a Feature</a>
   <a class="quick-link" href="#contact"><span class="icon">✉️</span> Contact Us</a>
@@ -392,6 +395,191 @@
       <div class="faq-a">Your $99.99/year license does not auto-renew by default. The app will remind you before expiry so you can choose to renew. You stay in control.</div>
     </div>
 
+  </div>
+</section>
+
+<!-- FAQ: BROKERAGE IMPORT -->
+<section class="section" id="faq-import" style="margin-top: 48px;">
+  <div class="section-title">🏦 Brokerage Import Questions</div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        My import shows "0 to import" — why are all rows skipped?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        The most common cause is that the action words in your broker's CSV aren't recognized. Check the red "Skipped row X:" messages in the preview — they show the exact word the importer couldn't classify (e.g., "Market Buy", "Dividend Payment", "Stock Transfer").<br><br>
+        Try these fixes in order:<br>
+        <strong>1.</strong> Select your specific brokerage from the dropdown instead of Auto-detect.<br>
+        <strong>2.</strong> If your broker isn't in the list, try a similar one (e.g., TD Ameritrade transactions often work with the Schwab profile since the merger).<br>
+        <strong>3.</strong> If neither works, <a href="#bug" style="color:var(--gold)">report the unrecognised action word</a> and we'll add it in the next update.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What's the difference between "📥 Import CSV" and "🏦 Import Broker"?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        These are two completely different things:<br><br>
+        <strong>📥 Import CSV</strong> reads Freedom Tracker's own backup format (the file you exported with "📤 Export CSV"). Use this to restore a portfolio backup or move your data between computers.<br><br>
+        <strong>🏦 Import Broker</strong> reads your brokerage's transaction export (Schwab, Fidelity, Robinhood, etc.). Use this to bring in your real transaction history from your broker. <em>This is the one you almost certainly want.</em>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        My broker isn't in the supported list — can I still import?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        Yes — try <strong>Auto-detect</strong> first. Freedom Tracker recognizes a wide range of column name variations (Date, Symbol, Action, Quantity, Price, Amount) across hundreds of brokerage layouts. It works for many unlisted brokers automatically.<br><br>
+        If Auto-detect skips most rows, open the CSV in a spreadsheet program to see the exact column names and action words. Then <a href="#bug" style="color:var(--gold)">submit a bug report</a> with that information and we'll add native support for your broker.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        My Berkshire (BRK/B) shares won't import — they're showing as skipped.
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        Freedom Tracker accepts standard US ticker symbols (letters, numbers, dots, and dashes). Some brokerages export Berkshire Hathaway as <strong>BRK/B</strong> with a forward slash, which is flagged as invalid.<br><br>
+        The fix: after your import, manually add BRK.B (with a dot) using the quick-add form at the top of the screen, and enter those purchases by hand. Most brokers use BRK.B which imports without issue.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        I imported the same file twice — will I have duplicate transactions?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        No. Freedom Tracker automatically detects duplicates before importing. Each transaction is checked against what's already in your portfolio by matching date + ticker + type + quantity. If the same transaction already exists, it's counted as a duplicate and skipped — not added again. The preview screen shows how many duplicates were found.<br><br>
+        Re-importing an old file to "catch up" is completely safe.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        I use Interactive Brokers and only part of my file imported.
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        Interactive Brokers' "Activity Statement" CSV contains multiple sections (Trades, Dividends, Fees, etc.), each with its own header row. Freedom Tracker reads from the first header it finds, so only one section imports at a time.<br><br>
+        The solution: in IBKR's report settings, generate separate CSV exports for <strong>Trades</strong> and for <strong>Dividends</strong>, then import each file individually. This gives you clean results for both transaction types.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Should I import my broker's DRIP transactions if I'm using the DRIP toggle?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        No — pick one approach, not both.<br><br>
+        <strong>Freedom Tracker's DRIP toggle</strong> rebuilds reinvestment history from scratch using Yahoo Finance's dividend history. It calculates how many shares you'd have accumulated if every dividend was reinvested at the ex-dividend price.<br><br>
+        <strong>Broker DRIP transactions</strong> imported from CSV are recorded as real buy transactions (shares added to your buys list).<br><br>
+        If you do both, the DRIP toggle will calculate reinvestment <em>on top of</em> the already-imported shares, resulting in double-counted shares and inflated income numbers.<br><br>
+        <strong>Recommendation:</strong> Enable the DRIP toggle (automatic, Yahoo-based) and skip the DRIP rows from your broker import. Or import the broker DRIP rows and leave the toggle off. Either works — just not both.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        My income shows $0 even though I own dividend-paying ETFs.
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        The income figures are based on Yahoo Finance's dividend history. This shows $0 when:<br><br>
+        <strong>1. Yahoo Finance is temporarily unavailable.</strong> Press <strong>F5</strong> to refresh. If prices load but income is still $0, the dividend data wasn't returned.<br><br>
+        <strong>2. The ticker symbol doesn't match Yahoo's symbol.</strong> For example, some ETFs trade under a slightly different symbol on Yahoo than on your brokerage. Check <a href="https://finance.yahoo.com" target="_blank" style="color:var(--gold)">finance.yahoo.com</a> to confirm the exact symbol.<br><br>
+        <strong>3. No dividends were paid in the last 12 months.</strong> If a fund recently cut its dividend, the trailing 12-month figure will be zero or very low.<br><br>
+        <strong>4. You own the shares as of today but with a future purchase date.</strong> Make sure the date you entered is the actual past purchase date, not a future date.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ: YOUR DATA -->
+<section class="section" id="faq-data" style="margin-top: 48px;">
+  <div class="section-title">💾 Your Data</div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Where is my portfolio data stored?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        Your portfolio is stored in a file called <strong>freedom_portfolio.json</strong> in the same folder as the Freedom Tracker application — entirely on your computer. Nothing is ever sent to a server.<br><br>
+        To find it on Windows, look in the folder where you installed the app (typically <code>C:\Users\YourName\AppData\Local\Programs\FreedomTracker\</code>).<br><br>
+        The quickest way to create a portable backup: use <strong>📤 Export CSV</strong> from the toolbar — it saves everything (holdings, transactions, settings) to a CSV file you can store anywhere.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        I accidentally deleted a ticker or transaction. Can I undo it?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        There is no in-app undo for deletions. If you have a backup, restore it:<br><br>
+        <strong>If you used "📤 Export CSV" before the deletion:</strong> Click "📥 Import CSV" and select your backup file. Your full portfolio is restored.<br><br>
+        <strong>If you have a copy of <code>freedom_portfolio.json</code>:</strong> Replace the current file in the app's folder with your backup copy, then restart Freedom Tracker.<br><br>
+        <strong>If you have no backup:</strong> The data is gone. We recommend exporting a backup after any major changes. Going forward, consider a quick weekly export to a cloud folder.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I use Freedom Tracker on two computers with one license?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        Yes. One license covers all computers you personally own. To use your portfolio on both machines:<br><br>
+        <strong>1.</strong> Export your portfolio on machine A using <strong>📤 Export CSV</strong>.<br>
+        <strong>2.</strong> Copy the file to machine B (USB drive, email, cloud storage — any method works).<br>
+        <strong>3.</strong> On machine B, use <strong>📥 Import CSV</strong> to load it.<br><br>
+        Note: changes made on one computer don't sync automatically to the other. Export from whichever machine you last updated and import on the other to stay current.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        The prices all show "—" and nothing loads. What's wrong?
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a">
+        Freedom Tracker fetches live prices from Yahoo Finance. If prices show "—":<br><br>
+        <strong>1. Check your internet connection.</strong> Press <strong>F5</strong> to retry.<br>
+        <strong>2. Yahoo Finance may be temporarily slow or down.</strong> This happens occasionally — try again in a few minutes.<br>
+        <strong>3. A firewall or VPN may be blocking the connection.</strong> Try disabling your VPN temporarily.<br><br>
+        Your portfolio data is unaffected — prices are fetched on demand and not required for the app to open. Income projections update as soon as prices load successfully.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMMUNITY Q&A -->
+<section class="section" id="community" style="margin-top: 56px;">
+  <div class="section-title">💬 Community Q&amp;A</div>
+  <div class="contact-box" style="flex-direction:column; align-items:flex-start; gap:16px;">
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div class="contact-icon">💬</div>
+      <div>
+        <h3 style="margin-bottom:4px;">Ask the Community</h3>
+        <p>Have a question that's not in the FAQ? Our GitHub Discussions board is the fastest way to get an answer — from us or from other Freedom Tracker users. Questions are searchable, so your answer might already be there.</p>
+      </div>
+    </div>
+    <a href="https://github.com/williammcdanieliv-art/freedom-tracker/discussions" target="_blank" class="btn btn-ghost" style="margin-left: 0; border-color: var(--gold); color: var(--gold);">
+      Open Community Q&amp;A →
+    </a>
+    <p style="color:var(--muted); font-size:0.85rem;">Good for: brokerage-specific import tips, investment strategy, feature requests, or anything you'd like other users to weigh in on. For bugs and billing, use the forms below.</p>
   </div>
 </section>
 
@@ -491,6 +679,7 @@
   <div class="footer-links">
     <a href="/">Home</a>
     <a href="/#pricing">Pricing</a>
+    <a href="/manual">Manual</a>
     <a href="/support">Support</a>
     <a href="mailto:support@myfreedomtracker.com">Contact</a>
   </div>
