@@ -252,6 +252,7 @@
   <div class="nav-links">
     <a href="/#features">Features</a>
     <a href="/#playground">Freedom Playground</a>
+    <a href="/#dreamer">Freedom Dreamer</a>
     <a href="/#pricing">Pricing</a>
     <a href="/manual" class="active">Manual</a>
     <a href="/support">Support</a>
@@ -282,8 +283,9 @@
       </div>
       <li><a href="#drip">5. DRIP (Dividend Reinvestment)</a></li>
       <li><a href="#income-numbers">6. Reading Income Numbers</a></li>
-      <li><a href="#backup">7. Backing Up Your Data</a></li>
-      <li><a href="#license">8. License Activation</a></li>
+      <li><a href="#dreamer">7. Freedom Dreamer</a></li>
+      <li><a href="#backup">8. Backing Up Your Data</a></li>
+      <li><a href="#license">9. License Activation</a></li>
     </ul>
   </aside>
 
@@ -308,7 +310,7 @@
           <div class="step-num">1</div>
           <div class="step-body">
             <strong>Download the installer</strong>
-            <p>Go to <a href="/" style="color:var(--gold)">myfreedomtracker.com</a> and click <strong>Download for Windows</strong>. You'll get a file named <code>FreedomTracker-6.7-Setup.exe</code>.</p>
+            <p>Go to <a href="/" style="color:var(--gold)">myfreedomtracker.com</a> and click <strong>Download for Windows</strong>. You'll get a file named <code>FreedomTracker-6.9-Setup.exe</code>.</p>
           </div>
         </div>
         <div class="step">
@@ -340,7 +342,7 @@
           <div class="step-num">1</div>
           <div class="step-body">
             <strong>Download the DMG</strong>
-            <p>Click <strong>Download for Mac</strong> on the homepage. You'll get <code>FreedomTracker-6.7-Mac.dmg</code>.</p>
+            <p>Click <strong>Download for Mac</strong> on the homepage. You'll get <code>FreedomTracker-6.9-Mac.dmg</code>.</p>
           </div>
         </div>
         <div class="step">
@@ -433,7 +435,7 @@
       <p>Expand any ticker in the main list by clicking its row (or double-clicking). Individual transactions appear as child rows. <strong>Double-click a transaction</strong> to edit it, or select it and press <strong>Delete</strong> (or use the 🗑 Delete toolbar button).</p>
 
       <div class="callout callout-warn">
-        <span class="callout-icon">⚠️</span> <strong>No undo:</strong> Deletions are permanent. If you accidentally delete a ticker or transaction, restore from your backup file (<code>freedom_portfolio.json</code>) — see <a href="#backup" style="color:var(--gold)">Section 7</a>.
+        <span class="callout-icon">⚠️</span> <strong>No undo:</strong> Deletions are permanent. If you accidentally delete a ticker or transaction, restore from your backup file (<code>freedom_portfolio.json</code>) — see <a href="#backup" style="color:var(--gold)">Section 8</a>.
       </div>
     </section>
 
@@ -653,10 +655,70 @@
     </section>
 
 
-    <!-- 7. BACKUP -->
+    <!-- 7. FREEDOM DREAMER -->
+    <section class="section">
+      <span class="section-anchor" id="dreamer"></span>
+      <h2><span class="icon">🌙</span> 7. Freedom Dreamer</h2>
+      <div class="section-desc">New in 6.9 — project your future dividend income from recurring contributions, with reinvested distributions compounding over time.</div>
+
+      <p>Where the <strong>Freedom Playground</strong> shows what a portfolio pays <em>today</em>, the <strong>Freedom Dreamer</strong> shows where you end up if you keep investing. Set a recurring contribution, choose your funds and a time horizon, and the Dreamer compounds reinvested distributions month by month to estimate the income your portfolio could produce at the end.</p>
+
+      <h3>Opening It</h3>
+      <p>Click <strong>🌙 Freedom Dreamer</strong> in the toolbar (next to Freedom Playground). The window opens with a short disclaimer banner and a sample scenario you can edit.</p>
+
+      <h3>Building a Projection</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Set your contribution</strong>
+            <p>Enter a dollar amount and pick a frequency — <strong>Weekly, Biweekly, Monthly, Quarterly, Yearly</strong>, or <strong>Custom</strong> ("every N days/weeks/months"). For example, $500 monthly or $250 weekly.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Add your funds</strong>
+            <p>Type a ticker and a weight %, then click <strong>Add</strong>. Add as many funds as you like — weights are auto-normalized. Double-click or right-click a fund to edit it, set a custom rate, or remove it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Choose a time horizon</strong>
+            <p>Enter a number and pick <strong>Years</strong> or <strong>Months</strong> — say, 10 years.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Pick a rate assumption</strong>
+            <p><strong>Conservative</strong> (the default) trims each fund's current distribution rate by a haircut you control — recommended for high-distribution ETFs. <strong>Current rate</strong> uses today's headline yield. You can also set a custom rate per fund by right-clicking it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Read the projection</strong>
+            <p>See projected <strong>monthly, yearly, and weekly</strong> income at the end of your horizon, total contributed, projected balance, blended yield, and a growth curve. Toggle <strong>Reinvest distributions (DRIP)</strong> to compare compounding on vs. off.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Save, Compare &amp; Connect</h3>
+      <p>Click <strong>Save Scenario</strong> to name and store a plan, and <strong>Load</strong> to bring it back later. Use <strong>Send to Playground</strong> to drop the projected end-state portfolio into the Freedom Playground, or <strong>Send to Budget</strong> to add the projected monthly income to your Budget as an income line.</p>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span> <strong>Projections are estimates, not guarantees.</strong>
+        <p>The Dreamer assumes a flat share price (no appreciation or NAV erosion), distributions reinvested, a constant rate, and pre-tax figures. It's a planning tool based on current and historical distribution data — actual results will vary with market conditions.</p>
+      </div>
+    </section>
+
+
+    <!-- 8. BACKUP -->
     <section class="section">
       <span class="section-anchor" id="backup"></span>
-      <h2><span class="icon">💾</span> 7. Backing Up Your Data</h2>
+      <h2><span class="icon">💾</span> 8. Backing Up Your Data</h2>
       <div class="section-desc">All your portfolio data is in one small JSON file. Copy it to back up everything.</div>
 
       <p>Freedom Tracker stores your entire portfolio in a file called <strong><code>freedom_portfolio.json</code></strong> located in the same folder as the app itself.</p>
@@ -703,7 +765,7 @@
     <!-- 8. LICENSE -->
     <section class="section">
       <span class="section-anchor" id="license"></span>
-      <h2><span class="icon">🔑</span> 8. License Activation</h2>
+      <h2><span class="icon">🔑</span> 9. License Activation</h2>
       <div class="section-desc">Activate your purchased license key to unlock the app after the trial ends.</div>
 
       <div class="steps">
@@ -758,7 +820,7 @@
     <a href="/support">Support</a>
     <a href="mailto:support@myfreedomtracker.com">Contact</a>
   </div>
-  <div class="footer-copy">© 2025 MyFreedomTracker. All rights reserved.</div>
+  <div class="footer-copy">© 2026 MyFreedomTracker. All rights reserved.</div>
 </footer>
 
 <script>
