@@ -648,13 +648,16 @@
     The offline desktop app for income investors. See your real dividend income, set a monthly freedom goal, and use the Freedom Playground to model the exact portfolio that gets you there.
   </p>
   <div class="hero-ctas">
-    <a class="btn btn-primary btn-lg" href="https://github.com/williammcdanieliv-art/freedom-tracker/releases/download/v6.7/FreedomTracker-6.7-Setup.exe">
+    <a class="btn btn-primary btn-lg" id="hero-download-btn" href="https://github.com/williammcdanieliv-art/freedom-tracker/releases/download/v6.7/FreedomTracker-6.7-Setup.exe">
       Start Free Trial — 3 Days
     </a>
     <a class="btn btn-outline btn-lg" href="#playground">
       See Freedom Playground ↓
     </a>
   </div>
+  <p style="font-size:0.8rem;color:var(--muted);margin-top:8px;">
+    <a id="hero-alt-link" href="https://github.com/williammcdanieliv-art/freedom-tracker/releases/download/v6.7/FreedomTracker-6.7-Mac.dmg" style="color:var(--muted);text-decoration:underline;text-underline-offset:3px;">Also available for macOS (.dmg)</a>
+  </p>
   <p class="hero-fine">
     <strong>3 days free</strong>, then $99.99/year &nbsp;·&nbsp; Windows &amp; Mac &nbsp;·&nbsp; Your data stays local, always
   </p>
@@ -877,7 +880,7 @@
     </div>
     <div class="faq-item">
       <div class="faq-q">Does it work on Mac?</div>
-      <div class="faq-a">Yes. Freedom Tracker runs on <strong>Windows 10 &amp; 11</strong> and <strong>macOS 12 (Monterey) and later</strong>. The Windows installer is available on this page. The Mac version is coming very soon.</div>
+      <div class="faq-a">Yes. Freedom Tracker runs on <strong>Windows 10 &amp; 11</strong> and <strong>macOS 12 (Monterey) and later</strong>. The Mac build is signed and notarized by Apple — download the <a href="https://github.com/williammcdanieliv-art/freedom-tracker/releases/download/v6.7/FreedomTracker-6.7-Mac.dmg" style="text-decoration:underline;text-underline-offset:3px;">Mac DMG here</a>.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">What brokers can I import from?</div>
@@ -912,5 +915,18 @@
   <div class="footer-copy">© 2026 MyFreedomTracker. All rights reserved.</div>
 </footer>
 
+<script>
+(function(){
+  var isMac = /Mac/.test(navigator.platform) || /Macintosh/.test(navigator.userAgent);
+  var winUrl = 'https://github.com/williammcdanieliv-art/freedom-tracker/releases/download/v6.7/FreedomTracker-6.7-Setup.exe';
+  var macUrl = 'https://github.com/williammcdanieliv-art/freedom-tracker/releases/download/v6.7/FreedomTracker-6.7-Mac.dmg';
+  if (isMac) {
+    var heroBtn = document.getElementById('hero-download-btn');
+    if (heroBtn) { heroBtn.href = macUrl; heroBtn.textContent = 'Download for Mac — Free Trial'; }
+    var altLink = document.getElementById('hero-alt-link');
+    if (altLink) { altLink.href = winUrl; altLink.textContent = 'Also available for Windows (.exe)'; }
+  }
+})();
+</script>
 </body>
 </html>
