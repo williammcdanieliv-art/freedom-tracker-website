@@ -3,11 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free Dividend Income Calculator — Freedom Playground Lite | MyFreedomTracker</title>
-<meta name="description" content="Free dividend income calculator. Drop in income tickers and dollar amounts and instantly see your projected weekly, monthly, and yearly income. No signup, runs in your browser.">
-<!-- Open Graph: makes shared links look good on Reddit / X / Discord -->
-<meta property="og:title" content="Free Dividend Income Calculator — Freedom Playground Lite">
-<meta property="og:description" content="See how much income a portfolio would actually pay you. No signup, private, runs in your browser.">
+<title>Free Dividend Income Calculator — How Much Could Your Portfolio Pay You? | MyFreedomTracker</title>
+<meta name="description" content="Enter your portfolio size and see how much monthly income it could pay you across dividend-growth, balanced, and high-income strategies. Free, no signup, runs in your browser.">
+<meta property="og:title" content="How much monthly income could your portfolio pay you?">
+<meta property="og:description" content="Type in your portfolio size, pick a strategy, see your projected monthly income. Free, private, no signup.">
 <meta property="og:type" content="website">
 <style>
   :root{
@@ -23,58 +22,70 @@
   header .wrap{display:flex;flex-direction:column;gap:6px}
   .brand{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);font-weight:700}
   h1{margin:2px 0 0;font-size:30px;line-height:1.18}
-  header p{margin:6px 0 0;color:#dfead7;font-size:16px;max-width:640px}
-  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0;
+  header p{margin:6px 0 0;color:#dfead7;font-size:16px;max-width:660px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0;
          box-shadow:0 1px 3px rgba(0,0,0,.04)}
-  h2{font-size:18px;margin:0 0 12px;color:var(--green)}
-  label{font-size:13px;font-weight:600;color:var(--grey);display:block;margin-bottom:4px}
-  select,input{font-size:15px;padding:10px 11px;border:1px solid var(--line);border-radius:9px;
-               background:#fff;color:var(--ink);width:100%}
-  input:focus,select:focus{outline:2px solid var(--moss);border-color:var(--moss)}
-  .addrow{display:grid;grid-template-columns:1fr 150px 110px;gap:10px;align-items:end}
-  button{font-size:15px;font-weight:700;border:none;border-radius:9px;padding:11px 16px;cursor:pointer}
-  .btn-primary{background:var(--green);color:#fff}
-  .btn-primary:hover{background:var(--green2)}
-  .btn-ghost{background:var(--mossl);color:var(--green)}
-  .btn-ghost:hover{background:#d9e6cd}
-  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
-  th,td{text-align:right;padding:9px 8px;border-bottom:1px solid var(--line)}
-  th:first-child,td:first-child{text-align:left}
-  thead th{color:var(--grey);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
-  .del{background:none;border:none;color:#b44;cursor:pointer;font-size:16px;padding:0 4px}
-  .empty{color:var(--grey);font-style:italic;padding:18px 0;text-align:center}
+  h2{font-size:18px;margin:0 0 14px;color:var(--green)}
+  label{font-size:13px;font-weight:600;color:var(--grey);display:block;margin-bottom:6px}
+  .amount-wrap{position:relative;max-width:340px}
+  .amount-wrap .dollar{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--grey)}
+  #total{font-size:26px;font-weight:700;padding:12px 14px 12px 32px;border:2px solid var(--line);
+         border-radius:11px;width:100%;color:var(--ink)}
+  #total:focus{outline:none;border-color:var(--moss)}
+  /* strategy cards */
+  .strats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+  .strat{border:2px solid var(--line);border-radius:12px;padding:15px;cursor:pointer;background:#fff;
+         transition:.12s;text-align:left}
+  .strat:hover{border-color:var(--moss)}
+  .strat.sel{border-color:var(--green);background:var(--mossl)}
+  .strat .nm{font-weight:800;color:var(--green);font-size:16px}
+  .strat .yld{font-size:24px;font-weight:800;color:var(--ink);margin:4px 0 2px}
+  .strat .yld small{font-size:13px;font-weight:600;color:var(--grey)}
+  .strat .tk{font-size:12px;color:var(--grey)}
   /* results */
-  .results{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-  .stat{background:var(--mossl);border-radius:12px;padding:16px;text-align:center}
+  .results{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:4px}
+  .stat{background:var(--mossl);border-radius:12px;padding:18px;text-align:center}
   .stat .big{font-size:26px;font-weight:800;color:var(--green);line-height:1.1}
   .stat .lab{font-size:12px;color:var(--grey);margin-top:4px}
   .stat.hero{background:var(--green);color:#fff}
-  .stat.hero .big{color:#fff;font-size:30px}
-  .stat.hero .lab{color:var(--moss)}
-  .bar{height:14px;border-radius:7px;background:var(--mossl);overflow:hidden;display:flex;margin-top:10px}
-  .bar span{height:100%}
-  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .stat.hero .big{color:#fff;font-size:38px}
+  .stat.hero .lab{color:var(--moss);font-size:13px}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  button{font-size:15px;font-weight:700;border:none;border-radius:9px;padding:11px 16px;cursor:pointer}
+  .btn-ghost{background:var(--mossl);color:var(--green)}
+  .btn-ghost:hover{background:#d9e6cd}
+  .btn-primary{background:var(--green);color:#fff}
   .note{font-size:12.5px;color:var(--grey)}
   .sample{background:#fff7e6;border:1px solid #f0d894;color:#8a6d1b;border-radius:9px;
           padding:9px 12px;font-size:13px;margin:12px 0;display:none}
-  /* CTA */
-  .cta{background:var(--green);color:#fff;border-radius:14px;padding:26px;margin:22px 0;text-align:center}
-  .cta h2{color:#fff;font-size:22px;margin:0 0 8px}
-  .cta p{margin:0 auto 16px;max-width:560px;color:#dfead7}
+  /* customize */
+  .toggle{margin-top:16px}
+  .toggle a{font-weight:700;cursor:pointer;font-size:14px;user-select:none}
+  #customPanel{display:none;margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+  .addrow{display:grid;grid-template-columns:1fr 120px 90px;gap:10px;align-items:end}
+  select,input.pct{font-size:15px;padding:10px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;width:100%}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+  th,td{text-align:right;padding:8px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--grey);font-size:12px;text-transform:uppercase}
+  .del{background:none;border:none;color:#b44;cursor:pointer;font-size:16px}
+  /* CTA — the Freedom Budget bridge */
+  .cta{background:var(--green);color:#fff;border-radius:14px;padding:28px;margin:22px 0;text-align:center}
+  .cta .lead{font-size:23px;font-weight:800;margin:0 0 6px;line-height:1.25}
+  .cta .lead b{color:var(--moss)}
+  .cta p{margin:0 auto 18px;max-width:600px;color:#dfead7;font-size:15.5px}
   .cta a.dl{display:inline-block;background:var(--gold);color:#fff;font-weight:800;
-            padding:13px 26px;border-radius:10px;text-decoration:none;font-size:16px}
-  .ceiling{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;text-align:left}
-  .ceiling div{background:rgba(255,255,255,.08);border-radius:9px;padding:11px 13px;font-size:13px;color:#eaf2e3}
-  .ceiling b{color:#fff;display:block;margin-bottom:2px}
-  /* email */
+            padding:14px 28px;border-radius:10px;text-decoration:none;font-size:16px}
+  .ceiling{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;text-align:left}
+  .ceiling div{background:rgba(255,255,255,.08);border-radius:9px;padding:12px;font-size:13px;color:#eaf2e3}
+  .ceiling b{color:#fff;display:block;margin-bottom:3px}
   .email{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
   .email .grow{flex:1;min-width:220px}
+  .disc{font-size:12px;color:var(--grey);background:#fff;border:1px dashed var(--line);border-radius:9px;padding:11px 13px;margin-top:14px}
   footer{color:var(--grey);font-size:12.5px;padding:22px 0 40px;text-align:center}
-  .disc{font-size:12px;color:var(--grey);background:#fff;border:1px dashed var(--line);
-        border-radius:9px;padding:11px 13px;margin-top:14px}
   @media(max-width:680px){
-    .addrow{grid-template-columns:1fr 1fr;}.addrow .addbtn{grid-column:1/3}
-    .results{grid-template-columns:repeat(2,1fr)}.ceiling{grid-template-columns:1fr}
+    .strats{grid-template-columns:1fr}.results{grid-template-columns:1fr}
+    .ceiling{grid-template-columns:1fr}.addrow{grid-template-columns:1fr 1fr;}
   }
 </style>
 </head>
@@ -82,82 +93,77 @@
 <header>
   <div class="wrap">
     <div class="brand">MyFreedomTracker</div>
-    <h1>Freedom Playground <span style="color:var(--moss)">Lite</span></h1>
-    <p>Drop in a few income tickers and dollar amounts, and see what they'd actually pay you — weekly, monthly, and yearly. No signup. Runs right here in your browser.</p>
+    <h1>How much could your portfolio pay you?</h1>
+    <p>Enter what your portfolio is worth, pick an income strategy, and see the monthly paycheck it could throw off. No signup — it all runs right here in your browser.</p>
   </div>
 </header>
 
 <main class="wrap">
-
   <div class="sample" id="sampleNote">⚠ Showing <b>sample rates</b>, not live market data. (Run <code>build_tickers.py</code> to load current distributions before launch.)</div>
 
   <section class="panel">
-    <h2>Build a hypothetical income portfolio</h2>
-    <div class="addrow">
-      <div>
-        <label for="ticker">Income ticker</label>
-        <select id="ticker"></select>
-      </div>
-      <div>
-        <label for="amount">Amount invested ($)</label>
-        <input id="amount" type="number" min="0" step="100" placeholder="10,000" inputmode="numeric">
-      </div>
-      <div class="addbtn">
-        <label>&nbsp;</label>
-        <button class="btn-primary" style="width:100%" onclick="addHolding()">Add</button>
-      </div>
+    <h2>1. What's your portfolio worth?</h2>
+    <div class="amount-wrap">
+      <span class="dollar">$</span>
+      <input id="total" type="text" inputmode="numeric" placeholder="250,000" autocomplete="off">
     </div>
 
-    <table id="tbl" aria-live="polite">
-      <thead><tr><th>Holding</th><th>Invested</th><th>Yield</th><th>Annual income</th><th></th></tr></thead>
-      <tbody id="rows"><tr><td colspan="5" class="empty">Add a holding above to see your projected income.</td></tr></tbody>
-    </table>
+    <h2 style="margin-top:22px">2. Pick an income strategy</h2>
+    <div class="strats" id="strats"><!-- filled by JS --></div>
+
+    <div class="toggle"><a id="customToggle" onclick="toggleCustom()">⚙ Customize the mix yourself ▾</a></div>
+    <div id="customPanel">
+      <div class="addrow">
+        <div><label for="ticker">Ticker</label><select id="ticker"></select></div>
+        <div><label for="pct">Weight (%)</label><input id="pct" class="pct" type="number" min="1" max="100" step="1" placeholder="25"></div>
+        <div><button class="btn-primary" style="width:100%" onclick="addCustom()">Add</button></div>
+      </div>
+      <table id="customTbl" style="display:none">
+        <thead><tr><th>Ticker</th><th>Weight</th><th>Yield</th><th></th></tr></thead>
+        <tbody id="customRows"></tbody>
+      </table>
+      <div class="note" id="customNote" style="margin-top:8px"></div>
+    </div>
   </section>
 
   <section class="panel" id="resultsPanel" style="display:none">
     <h2>Your projected income</h2>
     <div class="results">
       <div class="stat hero"><div class="big" id="rMonth">$0</div><div class="lab">per month</div></div>
-      <div class="stat"><div class="big" id="rWeek">$0</div><div class="lab">per week</div></div>
       <div class="stat"><div class="big" id="rYear">$0</div><div class="lab">per year</div></div>
       <div class="stat"><div class="big" id="rYield">0%</div><div class="lab">blended yield</div></div>
     </div>
-    <div class="bar" id="bar"></div>
-    <div class="note" style="margin-top:8px">Total invested: <b id="rInvested">$0</b> across <span id="rCount">0</span> holdings. Bar shows each holding's share of monthly income.</div>
+    <div class="note" style="margin-top:10px">Based on <b id="rTotal">$0</b> at a <span id="rYield2">0%</span> blended yield (<span id="rStrat">—</span>). That's about <b id="rWeek">$0</b>/week.</div>
     <div class="actions">
       <button class="btn-ghost" onclick="copyShareLink()">🔗 Copy shareable link</button>
       <button class="btn-ghost" onclick="copySummary()">📋 Copy summary</button>
       <button class="btn-ghost" onclick="resetAll()">↺ Start over</button>
     </div>
-    <div class="disc">Projections are based on current distribution rates and are <b>not guaranteed</b> — rates change and distributions can be cut. This tool is for tracking and modeling only, and is <b>not investment advice</b>.</div>
+    <div class="disc">Projections are based on current distribution rates and are <b>not guaranteed</b> — rates change and distributions can be cut. Strategy yields are an equal-weight average of the example tickers shown, for illustration only. This tool is for tracking and modeling, <b>not investment advice</b>.</div>
   </section>
 
-  <section class="cta">
-    <h2>This is just a taste.</h2>
-    <p>Freedom Playground Lite shows one hypothetical at today's rates. The full <b>Freedom Tracker</b> desktop app tracks your <b>real</b> portfolio — privately, offline, and yours to keep. Pay once, no subscription, no account, your data never leaves your machine.</p>
+  <!-- CTA: the Freedom Budget / Freedom Score bridge -->
+  <section class="cta" id="ctaPanel">
+    <p class="lead" id="ctaLead">See how much income your portfolio could really pay.</p>
+    <p id="ctaSub">Knowing the number is step one. The real question is: <b>does it cover your life?</b> In Freedom Tracker, drop your income into the <b>Freedom Budget</b> to map it against your actual bills, and watch your <b>Freedom Score</b> climb as you close the gap — all private, all offline, all on your machine.</p>
     <a class="dl" href="https://myfreedomtracker.com" id="dlLink">Get Freedom Tracker — free 7-day trial</a>
     <div class="ceiling">
-      <div><b>Your actual holdings</b>Any ticker, real shares, automated DRIP reinvestment.</div>
-      <div><b>Track &amp; project over time</b>Freedom Score, Insights dashboards, contribution projections.</div>
-      <div><b>Tax &amp; budgeting</b>FIFO realized gains, a budget planner, CSV import — all offline.</div>
+      <div><b>Freedom Budget</b>Map this income against your real monthly expenses.</div>
+      <div><b>Freedom Score</b>One number for how close you are to covering your life.</div>
+      <div><b>Your real holdings</b>Any ticker, real shares, automated DRIP — offline &amp; private.</div>
     </div>
   </section>
 
   <section class="panel">
     <h2>Want the free “Path to Freedom” guide?</h2>
-    <p class="note" style="margin-top:-4px">Optional. Drop your email and I'll send the free guide plus the occasional note when something genuinely useful ships. No spam, unsubscribe anytime. — Bill, founder</p>
-    <!-- TODO(Bill): set action= to your email provider's form endpoint (e.g. Buttondown/MailerLite/Beehiiv).
-         Until then this just shows a friendly confirmation and stores nothing. -->
+    <p class="note" style="margin-top:-6px">Optional. Drop your email and I'll send the free guide plus the occasional note when something genuinely useful ships. No spam, unsubscribe anytime. — Bill, founder</p>
+    <!-- TODO(Bill): set action= to your email provider's form endpoint (Buttondown/MailerLite/Beehiiv). -->
     <form class="email" id="emailForm" onsubmit="return handleEmail(event)">
-      <div class="grow">
-        <label for="email">Email (optional)</label>
-        <input id="email" type="email" placeholder="you@example.com">
-      </div>
+      <div class="grow"><label for="email">Email (optional)</label><input id="email" class="pct" type="email" placeholder="you@example.com"></div>
       <button class="btn-primary" type="submit">Send me the guide</button>
     </form>
     <div class="note" id="emailMsg" style="margin-top:8px;display:none;color:var(--green2)"></div>
   </section>
-
 </main>
 
 <footer class="wrap">
@@ -165,131 +171,205 @@
   Made by Bill, a fellow income investor. Your inputs stay in your browser — nothing is sent to a server.
 </footer>
 
-<!-- ticker dataset (regenerated by build_tickers.py) -->
 <script src="tickers.js"></script>
-<!-- Cloudflare Web Analytics (cookieless). TODO(Bill): paste your real token below to turn on funnel metrics.
+<!-- Cloudflare Web Analytics (cookieless). TODO(Bill): paste your token and uncomment.
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"YOUR_TOKEN_HERE"}'></script>
 -->
 <script>
-const FT = (window.FT_TICKERS && window.FT_TICKERS.data) ? window.FT_TICKERS : {data:{},isSample:true,lastUpdated:"—"};
+const FT = (window.FT_TICKERS && window.FT_TICKERS.data) ? window.FT_TICKERS : {data:{},isSample:true};
 const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
-const fmt2 = n => "$" + n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
-const PALETTE = ["#1f4d2e","#2c5f2d","#7ba65a","#b8860b","#3f7d52","#a7c47f","#5a8d3a","#cba94a"];
-let holdings = [];
 
-// ---- populate ticker dropdown ----
-(function init(){
-  const sel = document.getElementById("ticker");
-  const syms = Object.keys(FT.data).sort();
-  for(const s of syms){
-    const o = document.createElement("option");
-    o.value = s; o.textContent = `${s} — ${FT.data[s].name}`;
-    sel.appendChild(o);
+// Strategy presets — yields are computed live from the real dataset (equal weight).
+const PRESETS = {
+  growth:   { nm:"Dividend Growth", tickers:["SCHD","VIG","DGRO","VYM","HDV"], blurb:"Lower yield, rising payouts" },
+  balanced: { nm:"Balanced Income", tickers:["O","MAIN","DIVO","JEPI","ARCC"], blurb:"A middle-ground blend" },
+  high:     { nm:"High Income",     tickers:["JEPQ","QYLD","SPYI","XYLD","RYLD"], blurb:"Maximum current income" },
+};
+function presetYield(key){
+  const ts = PRESETS[key].tickers.filter(s=>FT.data[s]);
+  if(!ts.length) return 0;
+  return ts.reduce((s,t)=>s+FT.data[t].yield,0)/ts.length;
+}
+
+let state = { total:0, strat:null, custom:[] };  // strat: 'growth'|'balanced'|'high'|'custom'
+
+// ---------- build the strategy cards ----------
+function buildStrats(){
+  const wrap = document.getElementById("strats");
+  wrap.innerHTML = "";
+  for(const key of ["growth","balanced","high"]){
+    const y = presetYield(key);
+    const ex = PRESETS[key].tickers.filter(s=>FT.data[s]).slice(0,3).join(", ");
+    const div = document.createElement("div");
+    div.className = "strat"; div.id = "strat-"+key;
+    div.onclick = ()=>selectStrat(key);
+    div.innerHTML = `<div class="nm">${PRESETS[key].nm}</div>
+      <div class="yld">${y.toFixed(1)}%<small> yield</small></div>
+      <div class="tk">e.g. ${ex}</div>`;
+    wrap.appendChild(div);
   }
-  if(FT.isSample){ document.getElementById("sampleNote").style.display="block"; }
-  loadFromURL();
-})();
-
-function addHolding(){
-  const sym = document.getElementById("ticker").value;
-  const amt = parseFloat(document.getElementById("amount").value);
-  if(!sym || !amt || amt<=0){ return; }
-  const existing = holdings.find(h=>h.sym===sym);
-  if(existing){ existing.amt += amt; } else { holdings.push({sym, amt}); }
-  document.getElementById("amount").value = "";
+}
+function selectStrat(key){
+  state.strat = key; state.custom = [];
+  renderCustom();
+  document.querySelectorAll(".strat").forEach(e=>e.classList.remove("sel"));
+  const el = document.getElementById("strat-"+key); if(el) el.classList.add("sel");
   render();
 }
-function removeHolding(sym){ holdings = holdings.filter(h=>h.sym!==sym); render(); }
-function resetAll(){ holdings = []; history.replaceState(null,"",location.pathname); render(); }
 
-function render(){
-  const rows = document.getElementById("rows");
-  rows.innerHTML = "";
-  if(holdings.length===0){
-    rows.innerHTML = '<tr><td colspan="5" class="empty">Add a holding above to see your projected income.</td></tr>';
-    document.getElementById("resultsPanel").style.display="none";
-    return;
+// ---------- total input (live-formats with commas) ----------
+const totalEl = document.getElementById("total");
+totalEl.addEventListener("input", ()=>{
+  const raw = totalEl.value.replace(/[^0-9]/g,"");
+  state.total = raw ? parseInt(raw,10) : 0;
+  totalEl.value = raw ? parseInt(raw,10).toLocaleString("en-US") : "";
+  render();
+});
+
+// ---------- effective yield ----------
+function effYield(){
+  if(state.strat === "custom"){
+    const tot = state.custom.reduce((s,c)=>s+c.pct,0);
+    if(!tot) return 0;
+    return state.custom.reduce((s,c)=>s + c.pct*FT.data[c.sym].yield, 0)/tot;
   }
-  let totInvested=0, totAnnual=0;
-  holdings.forEach((h,i)=>{
-    const d = FT.data[h.sym];
-    const annual = h.amt * d.yield/100;
-    totInvested += h.amt; totAnnual += annual;
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td><b>${h.sym}</b> <span class="note">${d.freq}</span></td>
-      <td>${fmt(h.amt)}</td><td>${d.yield.toFixed(2)}%</td><td>${fmt(annual)}</td>
-      <td><button class="del" title="Remove" onclick="removeHolding('${h.sym}')">✕</button></td>`;
-    rows.appendChild(tr);
-  });
-  // results
-  document.getElementById("resultsPanel").style.display="block";
-  document.getElementById("rMonth").textContent = fmt(totAnnual/12);
-  document.getElementById("rWeek").textContent  = fmt(totAnnual/52);
-  document.getElementById("rYear").textContent  = fmt(totAnnual);
-  document.getElementById("rYield").textContent = totInvested? (totAnnual/totInvested*100).toFixed(2)+"%" : "0%";
-  document.getElementById("rInvested").textContent = fmt(totInvested);
-  document.getElementById("rCount").textContent = holdings.length;
-  // bar = share of monthly income
-  const bar = document.getElementById("bar"); bar.innerHTML="";
-  holdings.forEach((h,i)=>{
-    const annual = h.amt * FT.data[h.sym].yield/100;
-    const pct = totAnnual? annual/totAnnual*100 : 0;
-    const sp = document.createElement("span");
-    sp.style.width = pct+"%"; sp.style.background = PALETTE[i%PALETTE.length];
-    sp.title = `${h.sym}: ${pct.toFixed(0)}%`;
-    bar.appendChild(sp);
-  });
+  if(state.strat) return presetYield(state.strat);
+  return 0;
+}
+function stratLabel(){
+  if(state.strat==="custom") return "your custom mix";
+  return state.strat ? PRESETS[state.strat].nm : "—";
+}
+
+// ---------- render results ----------
+function render(){
+  const y = effYield();
+  const ready = state.total>0 && (state.strat && (state.strat!=="custom" || state.custom.length));
+  document.getElementById("resultsPanel").style.display = ready ? "block" : "none";
+  // CTA lead reacts to whether we have a number yet
+  const lead = document.getElementById("ctaLead");
+  if(ready){
+    const monthly = state.total * y/100 / 12;
+    document.getElementById("rMonth").textContent = fmt(monthly);
+    document.getElementById("rYear").textContent  = fmt(monthly*12);
+    document.getElementById("rWeek").textContent  = fmt(monthly*12/52);
+    document.getElementById("rYield").textContent = y.toFixed(2)+"%";
+    document.getElementById("rYield2").textContent= y.toFixed(2)+"%";
+    document.getElementById("rTotal").textContent = fmt(state.total);
+    document.getElementById("rStrat").textContent = stratLabel();
+    lead.innerHTML = `That's about <b>${fmt(monthly)}/month</b> — but does it cover your life?`;
+  } else {
+    lead.textContent = "See how much income your portfolio could really pay.";
+  }
   syncURL();
 }
 
-// ---- shareable link: encode holdings in the URL (no backend) ----
+// ---------- customize the mix ----------
+function toggleCustom(){
+  const p = document.getElementById("customPanel");
+  const open = p.style.display==="block";
+  p.style.display = open ? "none" : "block";
+  document.getElementById("customToggle").textContent = open ? "⚙ Customize the mix yourself ▾" : "⚙ Customize the mix yourself ▴";
+}
+function addCustom(){
+  const sym = document.getElementById("ticker").value;
+  const pct = parseFloat(document.getElementById("pct").value);
+  if(!sym || !pct || pct<=0) return;
+  const ex = state.custom.find(c=>c.sym===sym);
+  if(ex) ex.pct += pct; else state.custom.push({sym, pct});
+  state.strat = "custom";
+  document.querySelectorAll(".strat").forEach(e=>e.classList.remove("sel"));
+  document.getElementById("pct").value = "";
+  renderCustom(); render();
+}
+function removeCustom(sym){
+  state.custom = state.custom.filter(c=>c.sym!==sym);
+  if(!state.custom.length) state.strat = null;
+  renderCustom(); render();
+}
+function renderCustom(){
+  const tbl = document.getElementById("customTbl");
+  const rows = document.getElementById("customRows");
+  const note = document.getElementById("customNote");
+  rows.innerHTML = "";
+  if(!state.custom.length){ tbl.style.display="none"; note.textContent=""; return; }
+  tbl.style.display="table";
+  const totPct = state.custom.reduce((s,c)=>s+c.pct,0);
+  state.custom.forEach(c=>{
+    const tr = document.createElement("tr");
+    const share = totPct? (c.pct/totPct*100) : 0;
+    tr.innerHTML = `<td><b>${c.sym}</b> <span class="note">${FT.data[c.sym].name}</span></td>
+      <td>${share.toFixed(0)}%</td><td>${FT.data[c.sym].yield.toFixed(2)}%</td>
+      <td><button class="del" onclick="removeCustom('${c.sym}')">✕</button></td>`;
+    rows.appendChild(tr);
+  });
+  note.innerHTML = `Weights are normalized to 100%. Blended yield: <b>${effYield().toFixed(2)}%</b>.`;
+}
+
+// ---------- shareable link (URL-encoded, no backend) ----------
 function syncURL(){
-  const q = holdings.map(h=>`${h.sym}:${Math.round(h.amt)}`).join(",");
-  history.replaceState(null,"","?p="+encodeURIComponent(q));
+  const p = new URLSearchParams();
+  if(state.total) p.set("total", state.total);
+  if(state.strat==="custom" && state.custom.length){
+    p.set("strat","custom");
+    p.set("mix", state.custom.map(c=>`${c.sym}:${c.pct}`).join(","));
+  } else if(state.strat){ p.set("strat", state.strat); }
+  history.replaceState(null,"", p.toString()? "?"+p.toString() : location.pathname);
 }
 function loadFromURL(){
-  const p = new URLSearchParams(location.search).get("p");
-  if(!p) return;
-  p.split(",").forEach(pair=>{
-    const [sym,amt] = pair.split(":");
-    if(FT.data[sym] && parseFloat(amt)>0){ holdings.push({sym, amt:parseFloat(amt)}); }
-  });
+  const q = new URLSearchParams(location.search);
+  const t = parseInt(q.get("total")||"0",10);
+  if(t>0){ state.total=t; totalEl.value=t.toLocaleString("en-US"); }
+  const strat = q.get("strat");
+  if(strat==="custom"){
+    (q.get("mix")||"").split(",").forEach(pair=>{
+      const [sym,pct]=pair.split(":");
+      if(FT.data[sym] && parseFloat(pct)>0) state.custom.push({sym, pct:parseFloat(pct)});
+    });
+    if(state.custom.length){ state.strat="custom"; document.getElementById("customPanel").style.display="block"; renderCustom(); }
+  } else if(PRESETS[strat]){ selectStrat(strat); }
   render();
 }
-function copyShareLink(){
-  navigator.clipboard.writeText(location.href).then(()=>toast("Link copied — share it anywhere."));
-}
+function copyShareLink(){ navigator.clipboard.writeText(location.href).then(()=>toast("Link copied — share it anywhere.")); }
 function copySummary(){
-  if(!holdings.length) return;
-  let tot=0; const lines = holdings.map(h=>{
-    const a=h.amt*FT.data[h.sym].yield/100; tot+=a;
-    return `${h.sym}: ${fmt(h.amt)} → ${fmt(a)}/yr`;
-  });
-  const txt = `My hypothetical income portfolio (Freedom Playground Lite):\n`+
-    lines.join("\n")+`\n\nProjected: ${fmt(tot/12)}/mo · ${fmt(tot)}/yr · `+
-    `${(tot/holdings.reduce((s,h)=>s+h.amt,0)*100).toFixed(2)}% yield\n`+
-    `Build yours: https://myfreedomtracker.com`;
+  if(!state.total) return;
+  const y=effYield(), m=state.total*y/100/12;
+  const txt = `If I put ${fmt(state.total)} into a ${stratLabel()} income strategy (~${y.toFixed(2)}% yield):\n`+
+    `→ about ${fmt(m)}/month · ${fmt(m*12)}/year\n\n`+
+    `See if that covers your life: https://myfreedomtracker.com`;
   navigator.clipboard.writeText(txt).then(()=>toast("Summary copied."));
+}
+function resetAll(){
+  state={total:0,strat:null,custom:[]};
+  totalEl.value=""; document.querySelectorAll(".strat").forEach(e=>e.classList.remove("sel"));
+  renderCustom(); history.replaceState(null,"",location.pathname); render();
 }
 function handleEmail(e){
   e.preventDefault();
-  const v = document.getElementById("email").value.trim();
-  const msg = document.getElementById("emailMsg");
-  msg.style.display="block";
-  msg.textContent = v ? "Thanks! You're on the list — guide on its way. (Hook this form up to your email provider.)"
-                      : "Add an email above first 🙂";
+  const v=document.getElementById("email").value.trim();
+  const msg=document.getElementById("emailMsg"); msg.style.display="block";
+  msg.textContent = v ? "Thanks! You're on the list — guide on its way. (Hook this form to your email provider.)" : "Add an email above first 🙂";
   return false;
 }
 let toastT;
 function toast(t){
-  let el = document.getElementById("__toast");
+  let el=document.getElementById("__toast");
   if(!el){ el=document.createElement("div"); el.id="__toast";
-    el.style.cssText="position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#1f4d2e;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;z-index:99;box-shadow:0 4px 14px rgba(0,0,0,.2)";
+    el.style.cssText="position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#1f4d2e;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;z-index:99;box-shadow:0 4px 14px rgba(0,0,0,.2);transition:opacity .3s";
     document.body.appendChild(el); }
-  el.textContent=t; el.style.opacity="1";
-  clearTimeout(toastT); toastT=setTimeout(()=>el.style.opacity="0",1800);
+  el.textContent=t; el.style.opacity="1"; clearTimeout(toastT); toastT=setTimeout(()=>el.style.opacity="0",1800);
 }
-document.getElementById("amount").addEventListener("keydown",e=>{ if(e.key==="Enter") addHolding(); });
+
+// ---------- init ----------
+(function init(){
+  if(FT.isSample) document.getElementById("sampleNote").style.display="block";
+  const sel=document.getElementById("ticker");
+  Object.keys(FT.data).sort().forEach(s=>{
+    const o=document.createElement("option"); o.value=s; o.textContent=`${s} — ${FT.data[s].name}`; sel.appendChild(o);
+  });
+  buildStrats();
+  loadFromURL();
+})();
 </script>
 </body>
 </html>
