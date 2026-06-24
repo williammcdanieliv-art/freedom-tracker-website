@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Dividend Income Calculator — Freedom Playground Lite | MyFreedomTracker</title>
+<meta name="description" content="Free dividend income calculator. Drop in income tickers and dollar amounts and instantly see your projected weekly, monthly, and yearly income. No signup, runs in your browser.">
+<!-- Open Graph: makes shared links look good on Reddit / X / Discord -->
+<meta property="og:title" content="Free Dividend Income Calculator — Freedom Playground Lite">
+<meta property="og:description" content="See how much income a portfolio would actually pay you. No signup, private, runs in your browser.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --green:#1f4d2e; --green2:#2c5f2d; --moss:#7ba65a; --mossl:#e7efdf;
+    --gold:#b8860b; --ink:#232a24; --grey:#6a726a; --cream:#f6f8f3; --line:#d8e2d6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--cream);line-height:1.5}
+  a{color:var(--green2)}
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px}
+  header{background:var(--green);color:#fff;padding:34px 0 30px}
+  header .wrap{display:flex;flex-direction:column;gap:6px}
+  .brand{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--moss);font-weight:700}
+  h1{margin:2px 0 0;font-size:30px;line-height:1.18}
+  header p{margin:6px 0 0;color:#dfead7;font-size:16px;max-width:640px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0;
+         box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  h2{font-size:18px;margin:0 0 12px;color:var(--green)}
+  label{font-size:13px;font-weight:600;color:var(--grey);display:block;margin-bottom:4px}
+  select,input{font-size:15px;padding:10px 11px;border:1px solid var(--line);border-radius:9px;
+               background:#fff;color:var(--ink);width:100%}
+  input:focus,select:focus{outline:2px solid var(--moss);border-color:var(--moss)}
+  .addrow{display:grid;grid-template-columns:1fr 150px 110px;gap:10px;align-items:end}
+  button{font-size:15px;font-weight:700;border:none;border-radius:9px;padding:11px 16px;cursor:pointer}
+  .btn-primary{background:var(--green);color:#fff}
+  .btn-primary:hover{background:var(--green2)}
+  .btn-ghost{background:var(--mossl);color:var(--green)}
+  .btn-ghost:hover{background:#d9e6cd}
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
+  th,td{text-align:right;padding:9px 8px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--grey);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  .del{background:none;border:none;color:#b44;cursor:pointer;font-size:16px;padding:0 4px}
+  .empty{color:var(--grey);font-style:italic;padding:18px 0;text-align:center}
+  /* results */
+  .results{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .stat{background:var(--mossl);border-radius:12px;padding:16px;text-align:center}
+  .stat .big{font-size:26px;font-weight:800;color:var(--green);line-height:1.1}
+  .stat .lab{font-size:12px;color:var(--grey);margin-top:4px}
+  .stat.hero{background:var(--green);color:#fff}
+  .stat.hero .big{color:#fff;font-size:30px}
+  .stat.hero .lab{color:var(--moss)}
+  .bar{height:14px;border-radius:7px;background:var(--mossl);overflow:hidden;display:flex;margin-top:10px}
+  .bar span{height:100%}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .note{font-size:12.5px;color:var(--grey)}
+  .sample{background:#fff7e6;border:1px solid #f0d894;color:#8a6d1b;border-radius:9px;
+          padding:9px 12px;font-size:13px;margin:12px 0;display:none}
+  /* CTA */
+  .cta{background:var(--green);color:#fff;border-radius:14px;padding:26px;margin:22px 0;text-align:center}
+  .cta h2{color:#fff;font-size:22px;margin:0 0 8px}
+  .cta p{margin:0 auto 16px;max-width:560px;color:#dfead7}
+  .cta a.dl{display:inline-block;background:var(--gold);color:#fff;font-weight:800;
+            padding:13px 26px;border-radius:10px;text-decoration:none;font-size:16px}
+  .ceiling{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;text-align:left}
+  .ceiling div{background:rgba(255,255,255,.08);border-radius:9px;padding:11px 13px;font-size:13px;color:#eaf2e3}
+  .ceiling b{color:#fff;display:block;margin-bottom:2px}
+  /* email */
+  .email{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+  .email .grow{flex:1;min-width:220px}
+  footer{color:var(--grey);font-size:12.5px;padding:22px 0 40px;text-align:center}
+  .disc{font-size:12px;color:var(--grey);background:#fff;border:1px dashed var(--line);
+        border-radius:9px;padding:11px 13px;margin-top:14px}
+  @media(max-width:680px){
+    .addrow{grid-template-columns:1fr 1fr;}.addrow .addbtn{grid-column:1/3}
+    .results{grid-template-columns:repeat(2,1fr)}.ceiling{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">MyFreedomTracker</div>
+    <h1>Freedom Playground <span style="color:var(--moss)">Lite</span></h1>
+    <p>Drop in a few income tickers and dollar amounts, and see what they'd actually pay you — weekly, monthly, and yearly. No signup. Runs right here in your browser.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="sample" id="sampleNote">⚠ Showing <b>sample rates</b>, not live market data. (Run <code>build_tickers.py</code> to load current distributions before launch.)</div>
+
+  <section class="panel">
+    <h2>Build a hypothetical income portfolio</h2>
+    <div class="addrow">
+      <div>
+        <label for="ticker">Income ticker</label>
+        <select id="ticker"></select>
+      </div>
+      <div>
+        <label for="amount">Amount invested ($)</label>
+        <input id="amount" type="number" min="0" step="100" placeholder="10,000" inputmode="numeric">
+      </div>
+      <div class="addbtn">
+        <label>&nbsp;</label>
+        <button class="btn-primary" style="width:100%" onclick="addHolding()">Add</button>
+      </div>
+    </div>
+
+    <table id="tbl" aria-live="polite">
+      <thead><tr><th>Holding</th><th>Invested</th><th>Yield</th><th>Annual income</th><th></th></tr></thead>
+      <tbody id="rows"><tr><td colspan="5" class="empty">Add a holding above to see your projected income.</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="panel" id="resultsPanel" style="display:none">
+    <h2>Your projected income</h2>
+    <div class="results">
+      <div class="stat hero"><div class="big" id="rMonth">$0</div><div class="lab">per month</div></div>
+      <div class="stat"><div class="big" id="rWeek">$0</div><div class="lab">per week</div></div>
+      <div class="stat"><div class="big" id="rYear">$0</div><div class="lab">per year</div></div>
+      <div class="stat"><div class="big" id="rYield">0%</div><div class="lab">blended yield</div></div>
+    </div>
+    <div class="bar" id="bar"></div>
+    <div class="note" style="margin-top:8px">Total invested: <b id="rInvested">$0</b> across <span id="rCount">0</span> holdings. Bar shows each holding's share of monthly income.</div>
+    <div class="actions">
+      <button class="btn-ghost" onclick="copyShareLink()">🔗 Copy shareable link</button>
+      <button class="btn-ghost" onclick="copySummary()">📋 Copy summary</button>
+      <button class="btn-ghost" onclick="resetAll()">↺ Start over</button>
+    </div>
+    <div class="disc">Projections are based on current distribution rates and are <b>not guaranteed</b> — rates change and distributions can be cut. This tool is for tracking and modeling only, and is <b>not investment advice</b>.</div>
+  </section>
+
+  <section class="cta">
+    <h2>This is just a taste.</h2>
+    <p>Freedom Playground Lite shows one hypothetical at today's rates. The full <b>Freedom Tracker</b> desktop app tracks your <b>real</b> portfolio — privately, offline, and yours to keep. Pay once, no subscription, no account, your data never leaves your machine.</p>
+    <a class="dl" href="https://myfreedomtracker.com" id="dlLink">Get Freedom Tracker — free 7-day trial</a>
+    <div class="ceiling">
+      <div><b>Your actual holdings</b>Any ticker, real shares, automated DRIP reinvestment.</div>
+      <div><b>Track &amp; project over time</b>Freedom Score, Insights dashboards, contribution projections.</div>
+      <div><b>Tax &amp; budgeting</b>FIFO realized gains, a budget planner, CSV import — all offline.</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Want the free “Path to Freedom” guide?</h2>
+    <p class="note" style="margin-top:-4px">Optional. Drop your email and I'll send the free guide plus the occasional note when something genuinely useful ships. No spam, unsubscribe anytime. — Bill, founder</p>
+    <!-- TODO(Bill): set action= to your email provider's form endpoint (e.g. Buttondown/MailerLite/Beehiiv).
+         Until then this just shows a friendly confirmation and stores nothing. -->
+    <form class="email" id="emailForm" onsubmit="return handleEmail(event)">
+      <div class="grow">
+        <label for="email">Email (optional)</label>
+        <input id="email" type="email" placeholder="you@example.com">
+      </div>
+      <button class="btn-primary" type="submit">Send me the guide</button>
+    </form>
+    <div class="note" id="emailMsg" style="margin-top:8px;display:none;color:var(--green2)"></div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  Freedom Playground Lite · <a href="https://myfreedomtracker.com">myfreedomtracker.com</a> ·
+  Made by Bill, a fellow income investor. Your inputs stay in your browser — nothing is sent to a server.
+</footer>
+
+<!-- ticker dataset (regenerated by build_tickers.py) -->
+<script src="tickers.js"></script>
+<!-- Cloudflare Web Analytics (cookieless). TODO(Bill): paste your real token below to turn on funnel metrics.
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"YOUR_TOKEN_HERE"}'></script>
+-->
+<script>
+const FT = (window.FT_TICKERS && window.FT_TICKERS.data) ? window.FT_TICKERS : {data:{},isSample:true,lastUpdated:"—"};
+const fmt = n => "$" + Math.round(n).toLocaleString("en-US");
+const fmt2 = n => "$" + n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const PALETTE = ["#1f4d2e","#2c5f2d","#7ba65a","#b8860b","#3f7d52","#a7c47f","#5a8d3a","#cba94a"];
+let holdings = [];
+
+// ---- populate ticker dropdown ----
+(function init(){
+  const sel = document.getElementById("ticker");
+  const syms = Object.keys(FT.data).sort();
+  for(const s of syms){
+    const o = document.createElement("option");
+    o.value = s; o.textContent = `${s} — ${FT.data[s].name}`;
+    sel.appendChild(o);
+  }
+  if(FT.isSample){ document.getElementById("sampleNote").style.display="block"; }
+  loadFromURL();
+})();
+
+function addHolding(){
+  const sym = document.getElementById("ticker").value;
+  const amt = parseFloat(document.getElementById("amount").value);
+  if(!sym || !amt || amt<=0){ return; }
+  const existing = holdings.find(h=>h.sym===sym);
+  if(existing){ existing.amt += amt; } else { holdings.push({sym, amt}); }
+  document.getElementById("amount").value = "";
+  render();
+}
+function removeHolding(sym){ holdings = holdings.filter(h=>h.sym!==sym); render(); }
+function resetAll(){ holdings = []; history.replaceState(null,"",location.pathname); render(); }
+
+function render(){
+  const rows = document.getElementById("rows");
+  rows.innerHTML = "";
+  if(holdings.length===0){
+    rows.innerHTML = '<tr><td colspan="5" class="empty">Add a holding above to see your projected income.</td></tr>';
+    document.getElementById("resultsPanel").style.display="none";
+    return;
+  }
+  let totInvested=0, totAnnual=0;
+  holdings.forEach((h,i)=>{
+    const d = FT.data[h.sym];
+    const annual = h.amt * d.yield/100;
+    totInvested += h.amt; totAnnual += annual;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td><b>${h.sym}</b> <span class="note">${d.freq}</span></td>
+      <td>${fmt(h.amt)}</td><td>${d.yield.toFixed(2)}%</td><td>${fmt(annual)}</td>
+      <td><button class="del" title="Remove" onclick="removeHolding('${h.sym}')">✕</button></td>`;
+    rows.appendChild(tr);
+  });
+  // results
+  document.getElementById("resultsPanel").style.display="block";
+  document.getElementById("rMonth").textContent = fmt(totAnnual/12);
+  document.getElementById("rWeek").textContent  = fmt(totAnnual/52);
+  document.getElementById("rYear").textContent  = fmt(totAnnual);
+  document.getElementById("rYield").textContent = totInvested? (totAnnual/totInvested*100).toFixed(2)+"%" : "0%";
+  document.getElementById("rInvested").textContent = fmt(totInvested);
+  document.getElementById("rCount").textContent = holdings.length;
+  // bar = share of monthly income
+  const bar = document.getElementById("bar"); bar.innerHTML="";
+  holdings.forEach((h,i)=>{
+    const annual = h.amt * FT.data[h.sym].yield/100;
+    const pct = totAnnual? annual/totAnnual*100 : 0;
+    const sp = document.createElement("span");
+    sp.style.width = pct+"%"; sp.style.background = PALETTE[i%PALETTE.length];
+    sp.title = `${h.sym}: ${pct.toFixed(0)}%`;
+    bar.appendChild(sp);
+  });
+  syncURL();
+}
+
+// ---- shareable link: encode holdings in the URL (no backend) ----
+function syncURL(){
+  const q = holdings.map(h=>`${h.sym}:${Math.round(h.amt)}`).join(",");
+  history.replaceState(null,"","?p="+encodeURIComponent(q));
+}
+function loadFromURL(){
+  const p = new URLSearchParams(location.search).get("p");
+  if(!p) return;
+  p.split(",").forEach(pair=>{
+    const [sym,amt] = pair.split(":");
+    if(FT.data[sym] && parseFloat(amt)>0){ holdings.push({sym, amt:parseFloat(amt)}); }
+  });
+  render();
+}
+function copyShareLink(){
+  navigator.clipboard.writeText(location.href).then(()=>toast("Link copied — share it anywhere."));
+}
+function copySummary(){
+  if(!holdings.length) return;
+  let tot=0; const lines = holdings.map(h=>{
+    const a=h.amt*FT.data[h.sym].yield/100; tot+=a;
+    return `${h.sym}: ${fmt(h.amt)} → ${fmt(a)}/yr`;
+  });
+  const txt = `My hypothetical income portfolio (Freedom Playground Lite):\n`+
+    lines.join("\n")+`\n\nProjected: ${fmt(tot/12)}/mo · ${fmt(tot)}/yr · `+
+    `${(tot/holdings.reduce((s,h)=>s+h.amt,0)*100).toFixed(2)}% yield\n`+
+    `Build yours: https://myfreedomtracker.com`;
+  navigator.clipboard.writeText(txt).then(()=>toast("Summary copied."));
+}
+function handleEmail(e){
+  e.preventDefault();
+  const v = document.getElementById("email").value.trim();
+  const msg = document.getElementById("emailMsg");
+  msg.style.display="block";
+  msg.textContent = v ? "Thanks! You're on the list — guide on its way. (Hook this form up to your email provider.)"
+                      : "Add an email above first 🙂";
+  return false;
+}
+let toastT;
+function toast(t){
+  let el = document.getElementById("__toast");
+  if(!el){ el=document.createElement("div"); el.id="__toast";
+    el.style.cssText="position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#1f4d2e;color:#fff;padding:11px 18px;border-radius:10px;font-size:14px;z-index:99;box-shadow:0 4px 14px rgba(0,0,0,.2)";
+    document.body.appendChild(el); }
+  el.textContent=t; el.style.opacity="1";
+  clearTimeout(toastT); toastT=setTimeout(()=>el.style.opacity="0",1800);
+}
+document.getElementById("amount").addEventListener("keydown",e=>{ if(e.key==="Enter") addHolding(); });
+</script>
+</body>
+</html>
